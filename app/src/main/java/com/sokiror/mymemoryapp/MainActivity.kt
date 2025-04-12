@@ -1,6 +1,7 @@
 package com.sokiror.mymemoryapp
 
 import android.os.Bundle
+import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -11,37 +12,20 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.recyclerview.widget.RecyclerView
 import com.sokiror.mymemoryapp.ui.theme.MyMemoryAppTheme
 
 class MainActivity : ComponentActivity() {
+    private lateinit var rvBoard: RecyclerView
+    private lateinit var tvNumMoves: TextView
+    private lateinit var tvNumPairs: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            MyMemoryAppTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
-            }
-        }
-    }
-}
+        setContentView(R.layout.activity_main)
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    MyMemoryAppTheme {
-        Greeting("Android")
+        rvBoard = findViewById(R.id.rvBoard)
+        tvNumMoves = findViewById(R.id.tvNumMoves)
+        tvNumPairs = findViewById(R.id.tvNumPairs)
     }
 }
