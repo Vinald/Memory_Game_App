@@ -1,7 +1,6 @@
 package com.sokiror.mymemoryapp
 
 import android.content.ContentValues
-import android.content.ContentValues.TAG
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,19 +10,24 @@ import android.widget.ImageButton
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.sokiror.mymemoryapp.models.BoardSize
-import kotlin.collections.get
+import com.sokiror.mymemoryapp.models.MemoryCard
 import kotlin.math.min
 
 class MemoryBoardAdapter(
     private val context: Context,
     private val boardSize: BoardSize,
-    val cardImages: List<Int>
+    val cards: List<MemoryCard>,
+    private val cardClickListener: CardClickListener
 ):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         private const val MARGIN_SIZE = 10
         private const val TAG = "MemoryBoardAdapter"
+    }
+
+    interface CardClickListener {
+        fun onCardClicked(position: Int)
     }
 
     override fun onCreateViewHolder(
@@ -58,10 +62,15 @@ class MemoryBoardAdapter(
     private fun RecyclerView.ViewHolder.bind(position: Int) {
         val imageButton = itemView.findViewById<ImageButton>(R.id.imageButton)
 
-        imageButton.setImageResource(cardImages[position])
+        imageButton.setImageResource(if(cards[position].isFaceUp) {
+            cards[position].identifier
+        } else {
+            R.drawable.ic_launcher_background
+        })
 
         imageButton.setOnClickListener {
             Log.i(ContentValues.TAG, "Clicked on position $position")
+            cardClickListener.onCardClicked(position)
         }
 
     }
